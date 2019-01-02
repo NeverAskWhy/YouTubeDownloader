@@ -4,6 +4,7 @@ from tkinter.filedialog import askopenfilename, askdirectory
 import configparser
 import os.path
 from pytube import YouTube
+from pytube import Playlist
 import subprocess
 
 
@@ -67,10 +68,24 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 youtubelink = StringVar()
+youtubeplaylistlink = StringVar()
 myDirectoryName = StringVar()
 
 tempdirectory = readConfigfile()
 myDirectoryName.set(tempdirectory)
+
+
+# Enter YoutubePlaylist
+#Label
+ttk.Label(mainframe,text="Youtube-Playlist-Link").grid(column=1, row=0,sticky=(W))
+#Entry
+YoutubePL_entry = ttk.Entry(mainframe, width = 20, textvariable = youtubeplaylistlink)
+YoutubePL_entry.grid(column=2, row=0,sticky=(W,E))
+
+#Download video button
+ttk.Button(mainframe, text="Download Video", command=downloadYoutubeVideo).grid(column=3,row=0, sticky=(E,W))
+#Download Audio button
+ttk.Button(mainframe, text="Download Audio", command=downloadYoutubeAudio).grid(column=4,row=0, sticky=(E,W))
 
 
 # Enter Videolink
@@ -80,19 +95,21 @@ ttk.Label(mainframe,text="Youtube-Link").grid(column=1, row=1,sticky=(W))
 Youtube_entry = ttk.Entry(mainframe, width = 20, textvariable = youtubelink)
 Youtube_entry.grid(column=2, row=1,sticky=(W,E))
 
+#Download video button
+ttk.Button(mainframe, text="Download Video", command=downloadYoutubeVideo).grid(column=3,row=1, sticky=(E,W))
+#Download Audio button
+ttk.Button(mainframe, text="Download Audio", command=downloadYoutubeAudio).grid(column=4,row=1, sticky=(E,W))
+
 #Select target directory
 #Label
-ttk.Label(mainframe,text="Ausgabeverzeichnis").grid(column=1, row=2,sticky=(E))
+ttk.Label(mainframe,text="Ausgabeverzeichnis").grid(column=1, row=2,sticky=(W))
 directoryname_entry = ttk.Entry(mainframe, width = 20, textvariable = myDirectoryName)
 directoryname_entry.grid(column=2, row=2,sticky=(W,E))
 
 #Verzeichnis auswählen
 ttk.Button(mainframe, text="Verzeichnis auswählen", command=selectFileDirectory).grid(column=3, row=2, sticky=W)
 
-#Download video
-ttk.Button(mainframe, text="Download Video", command=downloadYoutubeVideo).grid(column=1,columnspan=3,row=3, sticky=(E,W))
-#Download Audio
-ttk.Button(mainframe, text="Download Audio", command=downloadYoutubeAudio).grid(column=1,columnspan=3,row=4, sticky=(E,W))
+
 
 root.mainloop()
 
