@@ -59,6 +59,30 @@ def downloadYoutubeAudio():
     saveConfigfile()
     messagebox.showinfo("Download erfolgreich", "Das Audio wurde herunter geladen.")
 
+def downloadYoutubePlaylist():
+    myyoutubeplaylist = youtubeplaylistlink.get()
+    pl = Playlist(myyoutubeplaylist)
+    pl.download_all(myDirectoryName.get())
+    saveConfigfile()
+    messagebox.showinfo("Download erfolgreich", "Die Videos wurden herunter geladen.")  
+
+def downloadYoutubePlaylistMP3():
+    myyoutubeplaylist = youtubeplaylistlink.get()
+    pl = Playlist(myyoutubeplaylist)
+    pl.download_all(myDirectoryName.get())
+    directory = os.fsencode(myDirectoryName.get())
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        mp4 = myDirectoryName.get()+'/'+filename
+        mp3 = myDirectoryName.get()+'/'+os.path.splitext(filename)[0]+'.mp3'
+        ffmpeg = ('ffmpeg -i "%s" "%s"' % (mp4 , mp3)) 
+        subprocess.run(ffmpeg)
+        os.remove(mp4)
+        #messagebox.showinfo("Dateiname",ffmpeg)
+
+    saveConfigfile()
+    messagebox.showinfo("Download erfolgreich", "Die Videos wurden herunter geladen und in MP3 umgewandelt.")   
+
 root = Tk()
 root.title("Youtube-Downloader")
 
@@ -82,10 +106,10 @@ ttk.Label(mainframe,text="Youtube-Playlist-Link").grid(column=1, row=0,sticky=(W
 YoutubePL_entry = ttk.Entry(mainframe, width = 20, textvariable = youtubeplaylistlink)
 YoutubePL_entry.grid(column=2, row=0,sticky=(W,E))
 
-#Download video button
-ttk.Button(mainframe, text="Download Video", command=downloadYoutubeVideo).grid(column=3,row=0, sticky=(E,W))
+#Download video playlist button
+ttk.Button(mainframe, text="Download Video", command=downloadYoutubePlaylist).grid(column=3,row=0, sticky=(E,W))
 #Download Audio button
-ttk.Button(mainframe, text="Download Audio", command=downloadYoutubeAudio).grid(column=4,row=0, sticky=(E,W))
+ttk.Button(mainframe, text="Download Audio", command=downloadYoutubePlaylistMP3).grid(column=4,row=0, sticky=(E,W))
 
 
 # Enter Videolink
