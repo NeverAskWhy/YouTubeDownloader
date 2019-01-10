@@ -131,7 +131,7 @@ directoryname_entry = ttk.Entry(mainframe, width = 20, textvariable = myDirector
 directoryname_entry.grid(column=2, row=2,sticky=(W,E))
 
 #Verzeichnis auswählen
-ttk.Button(mainframe, text="Verzeichnis auswählen", command=selectFileDirectory).grid(column=3, row=2, sticky=W)
+ttk.Button(mainframe, text="Verzeichnis1 auswählen", command=selectFileDirectory).grid(column=3, row=2, sticky=W)
 
 
 
